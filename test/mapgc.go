@@ -6,6 +6,22 @@ import (
 	"github.com/cespare/xxhash/v2"
 )
 
+func PrimitiveValueMap() map[int]int {
+	m := make(map[int]int)
+	for i := 0; i < 1000000; i++ {
+		m[i] = i
+	}
+	return m
+}
+
+func PointerValueMap() map[int]*int {
+	m := make(map[int]*int)
+	for i := 0; i < 1000000; i++ {
+		m[i] = &i
+	}
+	return m
+}
+
 func StringKeyMap() map[string]int {
 	m := make(map[string]int)
 	for i := 0; i < 1000000; i++ {
@@ -25,30 +41,41 @@ func XXHashKeyMap() map[uint64]int {
 	return m
 }
 
-// func main() {
-// 	// String Key Map
-// 	f1, _ := os.Create("string_heap.prof")
-// 	defer f1.Close()
+type BigStruct struct {
+	A int64
+	B int64
+	C int64
+	D int64
+	E int64
+	F int64
+	G int64
+	H int64
+	I int64
+	J int64
+	K int64
+	L int64
+	M int64
+	N int64
+	O int64
+	P int64
+}
 
-// 	stringMap := StringKeyMap()
-// 	runtime.GC()
-// 	pprof.WriteHeapProfile(f1)
+func BigStructValueMap() map[int]BigStruct {
+	m := make(map[int]BigStruct)
+	for i := 0; i < 1000000; i++ {
+		m[i] = BigStruct{}
+	}
+	return m
+}
 
-// 	_ = stringMap
-// 	stringMap = nil
-// 	runtime.GC()
+type SmallStruct struct {
+	A int64
+}
 
-// 	// xxhash Key Map
-// 	f2, _ := os.Create("xxhash_heap.prof")
-// 	defer f2.Close()
-
-// 	xxhashMap := XXHashKeyMap()
-// 	runtime.GC()
-// 	pprof.WriteHeapProfile(f2)
-
-// 	_ = xxhashMap
-
-// 	fmt.Println("✅ Profiles saved")
-// 	fmt.Println("View with: go tool pprof string_heap.prof")
-// 	fmt.Println("View with: go tool pprof xxhash_heap.prof")
-// }
+func SmallStructValueMap() map[int]SmallStruct {
+	m := make(map[int]SmallStruct)
+	for i := 0; i < 1000000; i++ {
+		m[i] = SmallStruct{}
+	}
+	return m
+}

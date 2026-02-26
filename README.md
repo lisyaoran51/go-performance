@@ -40,6 +40,8 @@ go tool trace trace.out
 ## test
 ```sh
 go test -run TestAdd
+# 只匹配名稱完全等於 TestPull 的函式
+go test -v -run "^TestPull$"
 ```
 
 ## benchmark
@@ -51,4 +53,15 @@ go test -bench=. -benchmem
 ## 執行次數
 ```sh
 go test -bench=BenchmarkXXHashKeyMapGC -benchtime=1000x
+```
+
+## 物間個數
+```sh
+go tool pprof -sample_index=alloc_objects mem.out
+```
+
+## 競爭
+```sh
+go test -race -v race_test.go
+go test -race -v -run TestDataRaceMutex
 ```
